@@ -12,7 +12,7 @@
  */
 
 // Your code goes here...
-
+const allItems = document.querySelectorAll('.item')
 
 
 /**
@@ -23,6 +23,7 @@
  * */
 
 // Your code goes here
+const main = document.querySelector('#main')
 
 
 
@@ -34,7 +35,7 @@
  */
 
 // Your code goes here
-
+const favs = document.getElementById('favs')
 
 
 /**
@@ -47,7 +48,33 @@
  */
 
 // Your code goes here
+function updateCollections(id, direction) {
+   
+   const item = document.getElementById(id);
+   const way = direction;
 
+   if (way === 'toFavs') {
+      const parent = item.parentElement
+      // console.log(parent, 'toFavs');
+      // if(parent) {
+      //    parent.removeChild(item)
+      // }
+      item.querySelector('i').classList.remove('fa-heart-circle-plus');
+      item.querySelector('i').classList.add('fa-heart-crack');
+      favs.appendChild(item)
+   }
+   if(way === 'toMain'){
+      const parent = item.parentElement
+      console.log(parent, 'toMain');
+      if(parent) {
+         parent.removeChild(item)
+      }
+      item.querySelector('i').classList.remove('fa-heart-crack');
+      item.querySelector('i').classList.add('fa-heart-circle-plus');
+      main.appendChild(item)
+   }
+
+}
 
 
 /**
@@ -65,5 +92,22 @@
  */
 
 // Your code goes here...
+allItems.forEach((item) => {
+   let parentId = item.parentElement.id
+   console.log(parentId, 'parentId')
+   let itemId = item.getAttribute('id')
 
+   if(parentId === 'main') {
+      item.addEventListener('click', function(){
+         updateCollections(itemId, 'toFavs')
+      })
+   } else if (parentId === 'favs') {
+      item.addEventListener('click', function(){
+         updateCollections(itemId, 'toMain')
+         console.log(parentId, 'parentId')
+         console.log(itemId, 'itemId')
+      })
+   }
+
+})
 
