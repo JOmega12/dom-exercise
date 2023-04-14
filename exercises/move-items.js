@@ -23,7 +23,7 @@ const allItems = document.querySelectorAll('.item')
  * */
 
 // Your code goes here
-const main = document.querySelector('#main')
+const main = document.getElementById('main')
 
 
 
@@ -35,8 +35,7 @@ const main = document.querySelector('#main')
  */
 
 // Your code goes here
-const favs = document.getElementById('favs')
-
+const favs = document.querySelector('#favs')
 
 /**
  * @task
@@ -49,29 +48,25 @@ const favs = document.getElementById('favs')
 
 // Your code goes here
 function updateCollections(id, direction) {
-   
-   const item = document.getElementById(id);
-   const way = direction;
+   console.log(id, direction, 'id and direction')
+   const item = document.getElementById(`${id}`);
+   console.log(item, 'item uC')
+   console.log(item.parentElement, 'item parent')
+   const parent = item.parentElement
+   if(parent) {
+      parent.removeChild(item)
+   }
 
-   if (way === 'toFavs') {
-      const parent = item.parentElement
-      // console.log(parent, 'toFavs');
-      // if(parent) {
-      //    parent.removeChild(item)
-      // }
+   if (direction === 'toFavs') {
       item.querySelector('i').classList.remove('fa-heart-circle-plus');
       item.querySelector('i').classList.add('fa-heart-crack');
       favs.appendChild(item)
    }
-   if(way === 'toMain'){
-      const parent = item.parentElement
-      console.log(parent, 'toMain');
-      if(parent) {
-         parent.removeChild(item)
-      }
+   else if(direction === 'toMain'){
       item.querySelector('i').classList.remove('fa-heart-crack');
       item.querySelector('i').classList.add('fa-heart-circle-plus');
       main.appendChild(item)
+
    }
 
 }
@@ -93,21 +88,17 @@ function updateCollections(id, direction) {
 
 // Your code goes here...
 allItems.forEach((item) => {
-   let parentId = item.parentElement.id
-   console.log(parentId, 'parentId')
-   let itemId = item.getAttribute('id')
-
-   if(parentId === 'main') {
-      item.addEventListener('click', function(){
-         updateCollections(itemId, 'toFavs')
-      })
-   } else if (parentId === 'favs') {
-      item.addEventListener('click', function(){
+   // console.log(parentClass, 'parentClass')
+//the reason why is because it picks up the initial parent element
+   item.addEventListener('click', function() {
+      let parentId = item.parentElement.id
+      let itemId = item.getAttribute('id')
+      if(parentId === 'favs') {
          updateCollections(itemId, 'toMain')
-         console.log(parentId, 'parentId')
-         console.log(itemId, 'itemId')
-      })
-   }
+      } else {
+         updateCollections(itemId, 'toFavs')
+
+      }
+   })
 
 })
-
