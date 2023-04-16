@@ -38,3 +38,57 @@
  */
 
 // Your code goes here...
+
+
+const cardsClasses = document.querySelectorAll('.card');
+console.log(cardsClasses, 'cards classes')
+const favorite = JSON.parse(localStorage.getItem('favorite')) || [];
+
+function setBackground(id) {
+   const element = document.getElementById(id)
+   if(favorite.includes(id)){
+      element.style.backgroundColor = 'red';
+   } else {
+      element.style.backgroundColor = '';
+   }
+}
+
+function addToFavorites(id) {
+   favorite.push(id);
+   localStorage.setItem('favorite', JSON.stringify(favorite))
+}
+
+function deleteFromFavorites(id) {
+   const index = favorite.indexOf(id);
+   if (index !== -1 ) {
+      favorite.splice(index, 1);
+      localStorage.setItem('favorite', JSON.stringify(favorite))
+   }
+}
+
+function updateColor(e) {
+   const id = e.target.id;
+   const element = document.getElementById(id);
+   const isFav = favorite.includes(id);
+   element.style.backgroundColor = isFav ? 'red': '';
+   element.dataset.fav = isFav ? 'true' : 'false';
+}
+
+
+cardsClasses.forEach((item) => {
+   setBackground(item.id);
+   item.addEventListener('click', function (e) {
+     const target = e.target;
+     if (target.classList.contains('card')) {
+       const id = target.id;
+       if (favorite.includes(id)) {
+         deleteFromFavorites(id);
+       } else {
+         addToFavorites(id);
+       }
+       updateColor(e);
+     }
+   });
+ });
+
+
