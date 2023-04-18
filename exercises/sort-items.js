@@ -45,36 +45,23 @@ function sortData(direction) {
    const newArray = Array.from(allItems)
 
 
-   if(direction === 'desc') {
-      const sortCB = (a, b) => {
-         if(a.innerHTML < b.innerHTML) return 1;
-         else if (a.innerHTML > b.innerHTML) return -1;
-         else return 0;
+   const sortCB = (a, b) => {
+      if(a.innerHTML < b.innerHTML) {
+         return direction === 'desc' ? 1: -1;
       }
-
-      newArray.sort(sortCB);
-      newArray.forEach((item)=>{
-         parentContainer.appendChild(item)
-      })
-      console.log(newArray, 'desc')
-   } else if (direction === 'asc') {
-      const sortCB = (a, b) => {
-         if (a.innerHTML < b.innerHTML) return -1;
-         else if (a.innerHTML > b.innerHTML) return 1;
-         else return 0;
+      else if (a.innerHTML > b.innerHTML) {
+         return direction === 'desc' ? -1: 0;
       }
-
-      newArray.sort(sortCB);
-      newArray.forEach((item) => {
-         parentContainer.appendChild(item)
-      });
-
-      console.log(newArray, 'asc')
+      else return 0;
    }
+
+   newArray.sort(sortCB);
+   newArray.forEach((item) => {
+      parentContainer.appendChild(item)
+   });
    
 }
-console.log(sortData('desc'), 'desc');
-console.log(sortData('asc'), 'asc');
+
 
 
 /**

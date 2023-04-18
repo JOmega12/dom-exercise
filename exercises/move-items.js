@@ -48,23 +48,27 @@ const favs = document.querySelector('#favs')
 
 // Your code goes here
 function updateCollections(id, direction) {
-   console.log(id, direction, 'id and direction')
    const item = document.getElementById(`${id}`);
-   console.log(item, 'item uC')
-   console.log(item.parentElement, 'item parent')
+
    const parent = item.parentElement
    if(parent) {
       parent.removeChild(item)
    }
 
-   if (direction === 'toFavs') {
-      item.querySelector('i').classList.remove('fa-heart-circle-plus');
-      item.querySelector('i').classList.add('fa-heart-crack');
+
+
+   const arrIcons = ['fa-heart-circle-plus', 'fa-heart-crack'];
+
+   const params = direction ==='toFavs'
+      ? arrIcons
+      : arrIcons.reverse();
+
+   item.querySelector('i').classList.remove(params[0]);
+   item.querySelector('i').classList.add(params[1]);
+
+   if(direction === 'toFavs'){
       favs.appendChild(item)
-   }
-   else if(direction === 'toMain'){
-      item.querySelector('i').classList.remove('fa-heart-crack');
-      item.querySelector('i').classList.add('fa-heart-circle-plus');
+   } else {
       main.appendChild(item)
 
    }
