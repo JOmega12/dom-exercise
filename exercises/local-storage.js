@@ -90,3 +90,13 @@ cardParent.addEventListener("click", function (e) {
       updateColor(e);
   }
 });
+
+for (let i = 0; i<favorite.length; i++) {
+  const id = favorite[i];
+  console.log(id, 'id')
+  const card = document.getElementById(id);
+  if (card) {
+    card.style.backgroundColor = 'red';
+    card.dataset.fav = 'true';
+  }
+}
